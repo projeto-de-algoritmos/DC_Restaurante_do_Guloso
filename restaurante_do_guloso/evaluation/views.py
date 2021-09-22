@@ -3,16 +3,19 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
 
-from copy import deepcopy
+from copy import copy
 import csv
+from random import shuffle
 
 class receita:
-    def __init__(self, nota, nome):
+    def __init__(self, nota, nome, imagem):
         self.nota = nota
         self.nome = nome
+        self.imagem = imagem
 
     def __repr__(self):
-        return self.nome + ' --> ' + str(self.nota)
+        #  return self.nome + ' --> ' + str(self.nota)
+        return self.imagem
 
 # tipo = 0 (avaliação), tipo = 1 (nome)
 def lesseq(i, j, tipo):
@@ -49,7 +52,7 @@ def merge(cardapio, left, middle, right, tipo):
 
 def merge_sort(cardapio, left, right, tipo):
     if left >= right:
-        return
+        return 0
     
     middle = (left + right) // 2
     merge_sort(cardapio, left, middle, tipo)
@@ -60,13 +63,12 @@ def read_csv(cardapio):
     with open('./evaluation/recipes.csv', newline='', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
-            cardapio.append(receita(len(row['Rating']), row['Name']))
+            if row['Photo'] != '':
+                cardapio.append(receita(len(row['Rating']), row['Name'], row['Photo']))
+            #  cardapio.append(receita(len(row['Rating']), row['Name'], row['Photo']))
 
 def menu(request):
-    # ler csv
     cardapio = []
     read_csv(cardapio)
-    # ordenar (avaliação, nome) [mergesort]
     merge_sort(cardapio, 0, len(cardapio) - 1, 1)
-    # receber recomendação
-    return HttpResponse(f"{cardapio}")
+    return HttpResponse(f"{len(cardapio)}")
