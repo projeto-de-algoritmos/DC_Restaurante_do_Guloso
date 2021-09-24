@@ -13,9 +13,9 @@ class receita:
         self.nome = nome
         self.imagem = imagem
 
-    def __repr__(self):
-        #  return self.nome + ' --> ' + str(self.nota)
-        return self.imagem
+    # def __repr__(self):
+    #     #  return self.nome + ' --> ' + str(self.nota)
+    #     return self.imagem
 
 # tipo = 0 (avaliação), tipo = 1 (nome)
 def lesseq(i, j, tipo):
@@ -70,5 +70,10 @@ def read_csv(cardapio):
 def menu(request):
     cardapio = []
     read_csv(cardapio)
-    merge_sort(cardapio, 0, len(cardapio) - 1, 1)
-    return HttpResponse(f"{len(cardapio)}")
+    if request.GET.__contains__('nome'):
+        merge_sort(cardapio, 0, len(cardapio) - 1, 1)
+        return render(request, 'evaluation.html', {'evaluations': cardapio, 'qtd_evaluation': len(cardapio)})
+    else:
+        merge_sort(cardapio, 0, len(cardapio) - 1, 0)
+        return render(request, 'evaluation.html', {'evaluations': cardapio, 'qtd_evaluation': len(cardapio)})
+
