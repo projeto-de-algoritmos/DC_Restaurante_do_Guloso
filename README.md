@@ -41,13 +41,13 @@ localhost:8000/evaluation/ --> Para acessar a parte DC do trabalho
 <summary>Divide and Conquer</summary>
 
 ### Tela inteira da aplicação
-![](assets/telaEvaluation)
+![](assets/telaEvaluation.png)
 
 ### Início da ordenação por nome
-![](assets/ordNome)
+![](assets/ordNome.png)
 
 ### Início da ordenação por avaliação
-![](assets/ordAval)
+![](assets/ordAval.png)
 
 </details>
 
